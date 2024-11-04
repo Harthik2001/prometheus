@@ -12,14 +12,16 @@ This project aims to integrate Prometheus and Grafana to monitor application met
 Run the following commands to deploy your application:
 
 # To deploy the deployment file
-kubectl apply -f Deployment.yaml
-
-# To deploy the service file
-kubectl apply -f service.yaml
-
+```bash
+   kubectl apply -f Deployment.yaml
+   
+   # To deploy the service file
+   kubectl apply -f service.yaml
+```
 6. Install Prometheus and Grafana
  Use Helm to install both applications in your Kubernetes cluster.
 
+```bash
 # Add the Helm repositories
  helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
  helm repo add grafana https://grafana.github.io/helm-charts
@@ -30,42 +32,41 @@ helm install prometheus prometheus-community/prometheus
 
 # Install Grafana
  helm install grafana grafana/grafana
-
+```
+```bash
 7. Configure Prometheus Scrape Configs
 Customize the scrape configuration by editing the values.yaml of the Prometheus Helm release or overriding it during installation:
 
-yaml
-Copy code
 scrapeConfigs:
   - job_name: 'your_app'
     metrics_path: '/metrics'
     static_configs:
       - targets: ['<minikube ip>:<Nodeport>']
-      - 
+ ``` 
 8. Access the Applications
-Access the applications with Minikube IP and their respective NodePorts:
+   Access the applications with Minikube IP and their respective NodePorts:
 
-Prometheus UI: http://<minikube-ip>:<prometheus-nodeport>
-Grafana UI: http://<minikube-ip>:<grafana-nodeport>
-ToDo Application UI: http://<minikube-ip>:<your-nodeport>
+   Prometheus UI: http://<minikube-ip>:<prometheus-nodeport>
+   Grafana UI: http://<minikube-ip>:<grafana-nodeport>
+   UnitConverter Application UI: http://<minikube-ip>:<your-nodeport>
 
 9. Add Prometheus as a Data Source in Grafana UI
     
-Navigate to Configuration > Data Sources.
+   Navigate to Configuration > Data Sources.
 
-Click Add data source and select Prometheus.
+   Click Add data source and select Prometheus.
 
-Set the URL to http://prometheus-server.
+   Set the URL to http://prometheus-server.
 
 11. Create Dashboards
     
-Go to Create > Dashboard. Add panels to visualize the metrics, such as:
+    Go to Create > Dashboard. Add panels to visualize the metrics, such as:
 
-> Total HTTP Requests
+    > Total HTTP Requests
 
->Memory Usage
+    > Memory Usage
 
->CPU Usage
+    > CPU Usage
 
 # Snapshots:
 

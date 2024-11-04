@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unitconverter  # Change to lowercase
+spec:
+  selector:
+    matchLabels:
+      app: unitconverter  # Change to lowercase
+  template:
+    metadata:
+      labels:
+        app: unitconverter  # Change to lowercase
+    spec:
+      containers:
+      - name: unitconverter  # Change to lowercase
+        image: harthik3004/unitconverter
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5002

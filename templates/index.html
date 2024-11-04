@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+</head>
+<body>
+    <h1>Unit Converter</h1>
+    <div>
+        <input type="number" id="value" placeholder="Value" required>
+        <select id="from">
+            <option value="km">Kilometers</option>
+            <option value="miles">Miles</option>
+            <option value="kg">Kilograms</option>
+            <option value="pounds">Pounds</option>
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+        </select>
+        <span>to</span>
+        <select id="to">
+            <option value="miles">Miles</option>
+            <option value="km">Kilometers</option>
+            <option value="pounds">Pounds</option>
+            <option value="kg">Kilograms</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="celsius">Celsius</option>
+        </select>
+        <button id="convert">Convert</button>
+    </div>
+    <h2 id="result"></h2>
+    <script>
+        document.getElementById('convert').addEventListener('click', async () => {
+            const value = parseFloat(document.getElementById('value').value);
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+
+            const response = await fetch('/convert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ value, from, to }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('result').innerText = `Result: ${data.result}`;
+            } else {
+                const error = await response.json();
+                document.getElementById('result').innerText = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
